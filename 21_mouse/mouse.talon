@@ -2,32 +2,32 @@
 settings():
     user.mouse_scroll_sensitivity = 1
 
-talon enable eye mouse control:
+^talon enable eye mouse control$:
     user.eye_mouse_wake()
 
-talon deactivate eye mouse control:
+^talon deactivate eye mouse control$:
     user.mouse_sleep()
 
-talon calibrate eye mouse:
+^talon calibrate eye mouse$:
     user.mouse_calibrate()
 
-talon enable eye mouse zoom:
+^talon enable eye mouse zoom$:
     user.eye_mouse_enable_zoom_mouse()
 
-talon deactivate eye mouse zoom:
+^talon deactivate eye mouse zoom$:
     user.eye_mouse_disable_zoom_mouse()
 
-talon cancel eye mouse zoom:
+^talon cancel eye mouse zoom$:
     user.eye_mouse_cancel_zoom_mouse()
 
-talon toggle camera overlay:
+^talon toggle camera overlay$:
     eye_mouse.camera_overlay.toggle()
 
-talon stop mouse [control]:
+^talon stop mouse [control]$:
     user.mouse_sleep()
 
-talon show mouse cursor: user.mouse_show_cursor()
-talon hide mouse cursor: user.mouse_hide_cursor()
+^talon show mouse cursor$: user.mouse_show_cursor()
+^talon hide mouse cursor$: user.mouse_hide_cursor()
 
 mouse click:
     mouse_click()

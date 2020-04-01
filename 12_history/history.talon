@@ -1,8 +1,8 @@
-show command history:
+^show command history$:
     user.history_enable()
 
-hide command history:
+^hide command history$:
     user.history_disable()
 
-clear command history:
+^clear command history$:
     user.history_clear()

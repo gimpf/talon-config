@@ -19,13 +19,13 @@ def set_enabled(value):
 
 
 ctx_asleep.commands = {
-    'talon wake up gently': lambda m: set_enabled(True),
+    '^talon wake up gently$': lambda m: set_enabled(True),
     # this reduces the risk that Talon incorrectly interprets arbitrary words as the wakeup a command
     '<word>+': ignore,
 }
 
 ctx_awake.commands = {
-    'talon sleep': lambda m: set_enabled(False),
+    '^talon sleep$': lambda m: set_enabled(False),
 }
 
 # during startup action.speech.toggle is not yet available, but seemingly also not necessary
