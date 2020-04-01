@@ -18,10 +18,11 @@ debug = False
 # sit -> inner (disambiguates w/zip, very microphone, bg-noise dependent, english z unnatural sound for me)
 # whale -> wave (bad to pronounce for me, is confused with bat (sic!) often, otherwise red, sun ...)
 # bat -> buy (bat seems to be like at: always chosen whether it was meant to or not)
+# odd -> oppo (odd is too similar to some noises between words, like 'control trap' is recognized as 'control odd trap')
 letters_alphabet = " ".join([
     'air buy cap drum each fine gust',
     'harp inner joy kiss look made near',
-    'odd pit quass red sun trap use vest',
+    'oppo pit quass red sun trap use vest',
     'wave plex yank zip']).split(' ')
 
 # NATO alphabet
@@ -34,14 +35,14 @@ letters_alphabet = " ".join([
 letters_letters = 'abcdefghijklmnopqrstuvwxyz'
 letters_alphabet_to_letter = dict(zip(letters_alphabet, letters_letters))
 symbols_alphabet_to_symbol = {
-    'dot': '.',
+    'point': '.',
     'comma': ',',
     'colon': ':',
     'semicolon': ';',
     'question': '?',
     'exclamation': '!',
 
-    'quote': "'",
+    'single quote': "'",
     'double quote': '"',
     'back tick': '`',
 
