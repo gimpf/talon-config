@@ -15,11 +15,11 @@ This repository is another configuration set, based upon a heavily modified [kna
 Why another configuration set?
 -------------------------------
 
-I have a non-native accent, a somewhat noisy environment, and a bad mic.
+I have a non-native accent, a somewhat noisy environment, and the wrong mic for the job.
 And I wanted to understand how Talon configurations work.
 
 As a result, I use a different spelling alphabet, always employ prefixed command words, and structure the directories around isolated features instead of large categories.
-This makes working with this configuration set slower, but the added redundancy makes it more reliable at correctly recognizing commands.
+The changed alphabet and commands make working with this configuration set slower, but the added redundancy makes for a bit more reliable recognition.
 
 
 Should I use this?
@@ -27,7 +27,7 @@ Should I use this?
 
 This configuration is almost unusably incomplete.
 Only use it at all if you face the same problems as I do.
-Otherwise the community supported configurations will likely be much better for your needs.
+Otherwise the community supported configurations will very likely be much better for your needs.
 
 
 About the folder structure
@@ -40,11 +40,57 @@ The numbers in the folder names only provide sorting for us humans, Talon loads 
 Other Talon tips
 -----------------
 
-### (TODO) Mic Checklist
-
 ### Linux
 
-To ensure that some crash is not GPU driver/rendering related, start Talon in software rendering mode by setting the environment variable `LIBGL_ALWAYS_SOFTWARE=1` for the Talon process.
+* ImGUI issues: for some linux distributions, ImGUI will crash Talon with a segmentation fault after a few times of using help and/or command history.
+  For this, I set `software=True` in the `imgui` annotations.
+  Were this not Mesa related but a driver issue, using software rendering by setting the environment variable `LIBGL_ALWAYS_SOFTWARE=1` were also an option.
+
+
+Talon Getting Started and Documention
+--------------------------------------
+
+* https://whalequench.club/blog/2019/09/03/learning-to-speak-code.html
+
+### Talon Modes
+
+Talon supports so called modes.
+Such modes are like a context for contexts:
+Some contexts (in .py or .talon files) may be available only for a few or a single mode.
+As a result, each mode can have a unique set of commands available for the user.
+
+In a .py file, use `ctx.matches = 'mode: all'` to set the mode, in a talon file add a line `mode: all` to the header.
+
+* `command`: activates voice commands
+* `hotkey`: activates hotkey commands
+* `noise`: activates noise commands
+* `dictation`: when using voice primarily for dictating text instead of issuing command
+* `sleep`: while sleeping
+* `dragon`: activates dragon naturally speaking dicatation mode
+
+```
+mode.enable(name)
+mode.disable(name)
+mode.toggle(name)
+mode.save()
+mode.restore()
+speech.disable()
+speech.enable()
+mod.mode('name', desc='this is what the mode is for')
+```
+
+
+List of Talon config-sets
+--------------------------
+
+* https://github.com/knausj85/knausj_talon - The "go-to" beta version config-set
+* https://github.com/dwiel/talon_community
+* https://github.com/jcaw/talon_config
+* https://github.com/lunixbochs/talon_starter_pack
+* https://github.com/2shea/talon_starter_pack
+* https://github.com/2shea/talon_configs
+* https://github.com/talonvoice/examples
+* https://github.com/anonfunc/talon-user
 
 
 License
