@@ -43,7 +43,7 @@ def update_title():
                 update_active_contexts_cache(registry.active_contexts())
 
 # todo: dynamic rect?
-@imgui.open(y=0)
+@imgui.open(y=0, software=True)
 def gui_alphabet(gui: imgui.GUI):
     global alphabet
     gui.text("Alphabet help")
@@ -57,7 +57,7 @@ def gui_alphabet(gui: imgui.GUI):
         gui_alphabet.hide()
 
 
-@imgui.open(y=0)
+@imgui.open(y=0, software=True)
 def gui_context_help(gui: imgui.GUI):
     global context_mapping
     global current_context_page
