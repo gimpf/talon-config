@@ -1,3 +1,5 @@
+mode: command
+-
 bee (letter | letters) <user.letters>: key(letters)
 bee uppercase [(letter | letters)] <user.letters>: self.doChord('shift', letters)
 bee (digit | digits) <user.digits>: key(digits)

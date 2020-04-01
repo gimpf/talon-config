@@ -1,3 +1,5 @@
+mode: command
+-
 ^show command history$:
     user.history_enable()
 

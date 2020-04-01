@@ -1,3 +1,5 @@
+mode: command
+-
 # from knausj_talon, misc/mouse.py
 settings():
     user.mouse_scroll_sensitivity = 1

@@ -110,7 +110,6 @@ assert(test_num([1, 'million', 10, 10]) == 100001010)
 
 ctx = Context()
 
-
 @ctx.capture('digits', rule=f'{alt_digits}+')
 def digits(m) -> int:
     return int(''.join([str(digits_map[n]) for n in m]))

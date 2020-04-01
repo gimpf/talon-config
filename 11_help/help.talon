@@ -1,3 +1,5 @@
+mode: command
+-
 ^help alphabet$:
     user.help_alphabet(user.get_alphabet())
 

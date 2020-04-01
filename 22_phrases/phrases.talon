@@ -1,3 +1,5 @@
+mode: command
+-
 word <word>:
     insert(word)
 
