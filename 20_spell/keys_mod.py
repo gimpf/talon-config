@@ -123,8 +123,7 @@ def letter(m) -> str:
 def letters(m) -> str:
     "Multiple letter keys"
 
-
-# a single digit is a capture defined by Taloi itself and provided by the number model
+# a single digit capture is defined by the numbers/cardinals module
 @mod.capture
 def digits(m) -> str:
     "Multiple digit keys"
@@ -253,8 +252,8 @@ def letters(m):
     return " ".join(m.letter_list)
 
 
-@ctx.capture(rule='<digits>+')
-def digits(m):
+@ctx.capture(rule='<user.digit>+')
+def digits(m) -> str:
     return " ".join(m.digit_list)
 
 

@@ -1,5 +1,5 @@
-# from knausj_talon/code/numbers.py
-from talon import Context, actions
+# via knausj_talon/code/numbers.py, orig lunixbochs/community
+from talon import Context, actions, Module
 
 digits = ['zero', 'one', 'two', 'three', 'four',
           'five', 'six', 'seven', 'eight', 'nine']
@@ -107,7 +107,21 @@ assert(test_num([1, 'million', 1, 1]) == 10000011)
 assert(test_num([1, 'million', 10, 10]) == 100001010)
 '''
 
+mod = Module()
+
+
+@mod.capture
+def digit(m) -> str:
+    "One digit"
+
+
 ctx = Context()
+
+
+@ctx.capture('self.digit', rule=f'{alt_digits}')
+def digit(m) -> str:
+    return int(digits_map[m[0]])
+
 
 @ctx.capture('digits', rule=f'{alt_digits}+')
 def digits(m) -> int:
