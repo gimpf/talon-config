@@ -19,9 +19,10 @@ debug = False
 # whale -> wave (bad to pronounce for me, is confused with bat (sic!) often, otherwise red, sun ...)
 # bat -> buy (bat seems to be like at: always chosen whether it was meant to or not)
 # odd -> oppo (odd is too similar to some noises between words, like 'control trap' is recognized as 'control odd trap')
+# inner -> ivy (not ice ,next try) + back from nanny -> near (should now not be confused anymore)
 letters_alphabet = " ".join([
     'air buy cap drum each fine gust',
-    'harp inner joy kiss look made near',
+    'harp ivy joy kiss look made near',
     'oppo pit quass red sun trap use vest',
     'wave plex yank zip']).split(' ')
 
@@ -72,18 +73,21 @@ symbols_alphabet_to_symbol = {
     'pipe': '|',
 
     'dollar': '$',
+
+    'space': 'space',  # also mapped in special char
 }
-specialchars_alphabet_to_chart = {
+specialchars_alphabet_to_char = {
     'tab':      'tab',
     'enter':    'enter',
-    'space':    'space',
+    'space':    'space',  # also mapped in symbol
     'escape':   'escape',
     'backspace': 'backspace',
     'delete':   'delete',
 }
 # todo digits should have a single definition shared across numbers/ordinals and here
-fkey_num_to_word = 'zero one two three four five six seven eight nine ten eleven twelve'.split(' ')
-specialchars_alphabet_to_chart.update(
+fkey_num_to_word = 'zero one two three four five six seven eight nine ten eleven twelve'.split(
+    ' ')
+specialchars_alphabet_to_char.update(
     {f"F {fkey_num_to_word[i]}": f"f{i}" for i in range(1, 13)})
 navs_word_to_key = {
     'left':  'left',
@@ -98,7 +102,9 @@ navs_word_to_key = {
 }
 modifiers_word_to_key = {
     'shift':   'shift',
-    'control': 'ctrl',
+    # use 'counter' instead of 'control' because between 'control' and
+    # the next letter, w2l often recognizes short letters like air or red
+    'counter': 'ctrl',
     'alt':     'alt',    'option':  'alt',
     'command': 'cmd',
     'ralt':    'ralt',
@@ -137,6 +143,16 @@ def symbol(m) -> str:
 @mod.capture
 def symbols(m) -> str:
     "Multiple symbol keys"
+
+
+@mod.capture
+def ordinary(m) -> str:
+    "One character of either letter, digit or symbol"
+
+
+@mod.capture
+def ordinaries(m) -> str:
+    "Multiple ordinary characters"
 
 
 @mod.capture
@@ -237,7 +253,7 @@ class LetterActions:
 ctx = Context()
 ctx.lists['self.letter'] = letters_alphabet_to_letter
 ctx.lists['self.symbol'] = symbols_alphabet_to_symbol
-ctx.lists['self.special'] = specialchars_alphabet_to_chart
+ctx.lists['self.special'] = specialchars_alphabet_to_char
 ctx.lists['self.nav'] = navs_word_to_key
 ctx.lists['self.modifier'] = modifiers_word_to_key
 
@@ -280,6 +296,16 @@ def symbols(m):
     return " ".join(m.symbol_list)
 
 
+@ctx.capture(rule='(<self.letter> | <user.digit> | <self.symbol>)')
+def ordinary(m) -> str:
+    return str(m)
+
+
+@ctx.capture(rule='<self.ordinary>+')
+def ordinaries(m) -> str:
+    return " ".join(m.ordinary_list)
+
+
 @ctx.capture(rule='{self.special}')
 def special(m):
     return m.special
@@ -300,7 +326,7 @@ def navs(m) -> str:
     return " ".join(m.nav_list)
 
 
-@ctx.capture(rule='(<self.letter> | <digits> | <self.symbol> | <self.special> | <self.nav>)')
+@ctx.capture(rule='(<self.ordinary> | <self.special> | <self.nav>)')
 def any(m) -> str:
     return str(m)
 
