@@ -113,9 +113,9 @@ modifiers_word_to_key = {
 }
 
 mod = Module()
-mod.list('letter', desc='The spoken phonetic alphabet')
-mod.list('symbol', desc='All symbols from the keyboard')
-mod.list('special', desc='All special keys')
+mod.list('letter',   desc='The spoken phonetic alphabet')
+mod.list('symbol',   desc='All symbols from the keyboard')
+mod.list('special',  desc='All special keys')
 mod.list('nav',      desc='All navigation keys')
 mod.list('modifier', desc='All modifier keys')
 
@@ -213,7 +213,7 @@ class LetterActions:
             res = f"{mods}-{keys}"
         else:
             res = f"{mods}:down {keys} {mods}:up"
-        print(f"chord: {res}")
+        print(f"prepared chord: {res}")
         return res
 
     def startChord(partialChord: str):
