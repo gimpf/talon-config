@@ -116,7 +116,7 @@ mod.list('modifier', desc='All modifier keys')
 
 @mod.capture
 def letter(m) -> str:
-    "One letter key"
+    "One letter key, optionally uppercase"
 
 
 @mod.capture
@@ -241,13 +241,26 @@ ctx.lists['self.special'] = specialchars_alphabet_to_chart
 ctx.lists['self.nav'] = navs_word_to_key
 ctx.lists['self.modifier'] = modifiers_word_to_key
 
+# I tried using a regular list with all the letters, but due to a currently unmitigated
+# edge-case in the talon engine, capturing letters would not work.  Once the issue
+# at https://github.com/talonvoice/beta/issues/37 is resolved, we can get rid of
+# manually built alternatives.  For now, according to aegis, this method does
+# not have any other disadvantages except for the missing convenience.
+letter_alts = '|'.join(letters_alphabet_to_letter.keys())
 
-@ctx.capture(rule='{self.letter}')
+# 'uppercase' is usually recognized as oppo kiss :-(
+@ctx.capture(rule=f'[large] ({letter_alts})')
 def letter(m):
-    return m.letter
+    letter = m[0]
+    if m[0] == "large":
+        letter = m[1]
+    letter = letters_alphabet_to_letter[letter]
+    if m[0] == "large":
+        return letter.upper()
+    return letter
 
 
-@ctx.capture(rule='{self.letter}+')
+@ctx.capture(rule='<user.letter>+')
 def letters(m):
     return " ".join(m.letter_list)
 

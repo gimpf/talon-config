@@ -1,7 +1,6 @@
 mode: command
 -
 bee (letter | letters) <user.letters>: key(letters)
-bee uppercase [(letter | letters)] <user.letters>: self.doChord('shift', letters)
 bee (digit | digits) <digits>: insert(digits)
 bee (sign | signs) <user.symbols>: key(symbols)
 bee (special | specials) <user.specials>: key(specials)
