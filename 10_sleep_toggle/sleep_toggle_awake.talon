@@ -1,6 +1,9 @@
 mode: dictation
 mode: command
 -
+settings():
+    user.noise_enabled = 'True'
+
 ^talon sleep$:
     mode.save()
     speech.disable()
@@ -22,3 +25,5 @@ mode: command
     # mode.disable('noise')
     # mode.disable('hotkey')
     # mode.enable('sleep')
+    # the following is a workaround while 'noise' mode isn't finished yet
+    mode.enable('user.coma')
