@@ -5,9 +5,13 @@ mode: dictation
     mode.disable("dictation")
     mode.enable("command")
 
-^<phrase>$: insert(phrase + " ")
+^<phrase>$:
+    dictate.natural(phrase)
+    insert(" ")
 # use this to dictate phrases that are would otherwise be commands
-^escape <phrase>$: insert(phrase + " ")
+^escape <phrase>$:
+    dictate.natural(phrase)
+    insert(" ")
 enter: key(enter)
 period: key(backspace . space)
 comma: key(backspace , space)
