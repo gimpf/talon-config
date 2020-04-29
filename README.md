@@ -60,6 +60,13 @@ Thankfully, this is a single line.
 
 For those who also use a Focusrite Scarlett, see the [utils/setup-microphone.sh](utils/setup-microphone.sh) script for this.
 
+Another thing to watch out for is resampling.
+Most distros use PA default resampling method speex-float-1, which requires little CPU, but has bad quality.
+The current version of Talon uses two audio streams, using different sampling rates, so resampling will always happen, and I have not found a way to force PulseAudio to give Talon always the raw sampling rate (Talon would resample on its own in that case).
+So ...
+You likely want to set in `/etc/pulse/daemon.conf`: `resample-method = speex-float-5`.
+`-5` is stable against adversarial samples w.r.t. human perception.
+
 
 Talon Getting Started and Documention
 --------------------------------------
