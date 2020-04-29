@@ -34,7 +34,9 @@ About the folder structure
 ----------------------------
 
 As much as possible, each folder implements only a small number of strongly related features.
-The numbers in the folder names only provide sorting for us humans, Talon loads them in arbitrary order.
+While currently (2020-04-29) bugged, Talon will load the folders in lexicographic order (for now it only does so for the leafs, i.e. the files in the most deeply nested folders).
+However, currently this load order is not required at all.
+The numbers are mainly here to provide sorting for us humans, illustrating a path from very low-level, common, to more and more high-level scripts.
 
 
 Other Talon tips
@@ -45,6 +47,18 @@ Other Talon tips
 * ImGUI issues: for some linux distributions, ImGUI will crash Talon with a segmentation fault after a few times of using help and/or command history.
   For this, I set `software=True` in the `imgui` annotations.
   Were this not Mesa related but a driver issue, using software rendering by setting the environment variable `LIBGL_ALWAYS_SOFTWARE=1` were also an option.
+
+### Microphones, Linux, PulseAudio, Focusrite Scarlett
+
+Talon requests a mono channel from your microphone, as is proper.
+However, when using mono on the stereo Focusrite Scarlett Sole USB interface, either PulseAudio or the interface creates a hard limit at -6dB, not through reduced gain, but plain numerical limiting.
+This causes unnecessary audio artifacts, which if they occurr will not exactly improve the recognition rate.
+Reducing the mic gain on the interface on the other hand can cause the VAD (voice activity detection) to not pick up on your commands.
+
+The solution is to use PulseAudio for providing a virtual mono audio source, which in the background uses the interface in stereo mode, and copies the left channel to its one and only mono channel.
+Thankfully, this is a single line.
+
+For those who also use a Focusrite Scarlett, see the [utils/setup-microphone.sh](utils/setup-microphone.sh) script for this.
 
 
 Talon Getting Started and Documention
