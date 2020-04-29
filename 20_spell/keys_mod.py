@@ -118,6 +118,7 @@ mod.list('symbol',   desc='All symbols from the keyboard')
 mod.list('special',  desc='All special keys')
 mod.list('nav',      desc='All navigation keys')
 mod.list('modifier', desc='All modifier keys')
+mod.list('media',    desc='All media keys')
 
 
 @mod.capture
@@ -200,6 +201,11 @@ def partialchord(m) -> str:
     "Modifiers and optionally other keys"
 
 
+@mod.capture
+def media(m) -> str:
+    "Media keys"
+
+
 current_modifiers = set()
 
 
@@ -256,6 +262,16 @@ ctx.lists['self.symbol'] = symbols_alphabet_to_symbol
 ctx.lists['self.special'] = specialchars_alphabet_to_char
 ctx.lists['self.nav'] = navs_word_to_key
 ctx.lists['self.modifier'] = modifiers_word_to_key
+ctx.lists['self.media'] = {
+    'volume up': 'volup',
+    'volume down': 'voldown',
+    'mute': 'mute',
+    'next': 'next',
+    'prev': 'prev',
+    'toggle play': 'play_pause',
+    'play': 'play',
+    'pause': 'pause'
+}
 
 # I tried using a regular list with all the letters, but due to a currently unmitigated
 # edge-case in the talon engine, capturing letters would not work.  Once the issue
@@ -349,3 +365,8 @@ def chord(m) -> str:
 @ctx.capture(rule='<self.modifiers> <self.any>*')
 def partialchord(m) -> str:
     return " ".join([m.modifiers] + (m.any_list if hasattr(m, "any_list") else []))
+
+
+@ctx.capture(rule='{self.media}')
+def media(m) -> str:
+    return m.media
