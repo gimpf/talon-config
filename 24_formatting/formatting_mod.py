@@ -8,7 +8,7 @@ NOSEP = True
 SEP = False
 
 
-def surround(by):
+def surround_phrase(by):
     """Surround the whole phrase with prefix/suffix specified in by."""
     def func(i, word, last):
         if i == 0:
@@ -49,50 +49,77 @@ def every_word(word_func):
     return formatter_function
 
 
-def format_text_helper(words, fmtrs):
+abbreviations = {
+    "command": ["cmd"],
+}
+
+
+def chain_formatters(formatters):
+    smash = SEP
+    for s, _ in formatters:
+        if s == NOSEP:
+            smash = NOSEP
+            break
+
+    def formatter_function(i, word, isLast):
+        for _, func in reversed(formatters):
+            print(f"1. {word}")
+            word = func(i, word, isLast)
+            print(f"2. {word} - {type(word)} - after {func}")
+        return word
+    return (smash, formatter_function)
+
+
+formatters_dict = {
+    "camel": (NOSEP, first_vs_rest(lambda w: w, lambda w: w.capitalize())),
+    "pascal": (NOSEP, every_word(lambda w: w.capitalize())),
+    "snake": join_words("_"),
+    "kebab": join_words("-"),
+    "pack": join_words("::"),
+    "dotted": join_words("."),
+    "slash": join_words("/"),
+    "dunder": (NOSEP, surround_phrase("__")),
+    "smash": join_words(""),
+
+    "allcaps": (SEP, every_word(lambda w: w.upper())),
+    "alldown": (SEP, every_word(lambda w: w.lower())),
+
+    "single quoted": (SEP, surround_phrase("'")),
+    "double quoted": (SEP, surround_phrase('"')),
+    "backtick quoted": (SEP, surround_phrase("`")),
+    "padded": (SEP, surround_phrase(" ")),
+
+    "sentence": (SEP, first_vs_rest(lambda w: w.capitalize())),
+    "title": (SEP, lambda i, word, _: word.capitalize() if i == 0 or word not in words_to_keep_lowercase else word),
+
+    "truncate to three": (SEP, every_word(lambda w: w[:3])),
+    "truncate to four": (SEP, every_word(lambda w: w[:4])),
+    "truncate to five": (SEP, every_word(lambda w: w[:5])),
+
+    "acronym": (NOSEP, every_word(lambda w: w[:1]))
+}
+
+
+def format_text_helper(words, formatterNames):
+    formatters = [formatters_dict[name] for name in formatterNames]
+    smash, formatter = chain_formatters(formatters)
     tmp = []
-    spaces = True
     for i, w in enumerate(words):
-        for name in reversed(fmtrs):
-            smash, func = formatters_dict[name]
-            w = func(i, w, i == len(words) - 1)
-            spaces = spaces and not smash
+        w = str(w)
+        w = formatter(i, w, i == len(words) - 1)
         tmp.append(w)
     words = tmp
 
-    sep = " " if spaces else ""
+    sep = " " if smash == SEP else ""
     return sep.join(words)
 
 # parse dragon marks on words
 # words = actions.dictate.parse_words(m)
 # replace from setting dicate.word_map
 # words = actions.dictate.replace_words(words)
-# make a sentente
-# word = actions.dicate.join_words
+# make a sentence
+# word = actions.dictate.join_words
 
-
-formatters_dict = {
-    "dunder": (NOSEP, first_vs_rest(lambda w: "__%s__" % w)),
-    "camel": (NOSEP, first_vs_rest(lambda w: w, lambda w: w.capitalize())),
-    "pascal": (NOSEP, every_word(lambda w: w.capitalize())),  # "hammer"
-    "snake": (NOSEP, first_vs_rest(lambda w: w.lower(), lambda w: "_" + w.lower())),
-    "smash": (NOSEP, every_word(lambda w: w)),
-    "kebab": join_words("-"),
-    "packed": join_words("::"),
-    "dotted": join_words("."),
-    "slasher": (NOSEP, every_word(lambda w: "/" + w)),
-
-    "allcaps": (SEP, every_word(lambda w: w.upper())),
-    "alldown": (SEP, every_word(lambda w: w.lower())),
-
-    "single quoted": (SEP, surround('"')),
-    "double quoted": (SEP, surround("'")),
-    "backtick quoted": (SEP, surround("`")),
-    "padded": (SEP, surround(" ")),
-
-    "sentence": (SEP, first_vs_rest(lambda w: w.capitalize())),
-    "title": (SEP, lambda i, word, _:  word.capitalize() if i == 0 or word not in words_to_keep_lowercase else word)
-}
 
 mod = Module()
 mod.list('formatters', desc='list of formatters')
