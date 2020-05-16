@@ -273,15 +273,8 @@ ctx.lists['self.media'] = {
     'pause': 'pause'
 }
 
-# I tried using a regular list with all the letters, but due to a currently unmitigated
-# edge-case in the talon engine, capturing letters would not work.  Once the issue
-# at https://github.com/talonvoice/beta/issues/37 is resolved, we can get rid of
-# manually built alternatives.  For now, according to aegis, this method does
-# not have any other disadvantages except for the missing convenience.
-letter_alts = '|'.join(letters_alphabet_to_letter.keys())
-
 # 'uppercase' is usually recognized as oppo kiss :-(
-@ctx.capture(rule=f'[large] ({letter_alts})')
+@ctx.capture(rule='[large] {user.letter}')
 def letter(m):
     letter = m[0]
     if m[0] == "large":
