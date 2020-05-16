@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+if [[ ! -d ~/bin/talon.$1 ]]; then
+    echo Error: version $1 not available
+    exit 1
+fi
+if [[ ! -L ~/bin/talon && -e ~/bin/talon ]]; then
+    echo Error: ~/bin/talon cannot be swapped with new version
+    exit 2
+fi
+cd ~/bin
+ln --force --symbolic --relative --no-dereference "talon.$1" talon

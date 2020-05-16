@@ -1,0 +1,5 @@
+# delete recordings w/o commands, i.e. those that were collected during talon coma
+# fd | rg '/\d{4} [^@]' | xargs -d\\n rm
+#
+# convert all recordings to flac and delete orig
+# fd --ignore-case --type file '.*wav$' --exec flac --warnings-as-errors --silent --delete-input-file -8 '{}' \

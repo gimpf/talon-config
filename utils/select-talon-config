@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+if [[ ! -d ~/.talon/user.$1 ]]; then
+    echo Error: config $1 not available
+    exit 1
+fi
+if [[ ! -L ~/.talon/user && -e ~/.talon/user ]]; then
+    echo Error: ~/.talon/user cannot be swapped with new config
+    exit 2
+fi
+cd ~/.talon
+ln --force --symbolic --relative --no-dereference "user.$1" user
