@@ -101,7 +101,8 @@ navs_word_to_key = {
     'end':       'end',
 }
 modifiers_word_to_key = {
-    'shift':   'shift',
+    # ship instead of shift to reduce misrecognition as five
+    'ship':   'shift',
     # use 'counter' instead of 'control' because between 'control' and
     # the next letter, w2l often recognizes short letters like air or red
     'counter': 'ctrl',
