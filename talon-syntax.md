@@ -30,6 +30,8 @@ Actions
   - ctrl-alt:down a b c d e f ctrl-alt:up
 * insert
   - insert("whatever text you like")
+* repeat
+* skip
 
 
 ```
@@ -37,4 +39,24 @@ key(F13): do something
 action(user.lol): do something else
 voice command: maybe do stuff
 voice command with <user.captures>: do stuff with captures
+```
+
+
+Settings
+---------
+
+```
+settings():
+    user.mysetting = 10
+```
+
+
+Tags
+------
+
+
+```
+tag: tagThatNeedsToBeSetToMatch
+-
+tag(): tagToBeEnabledForTheCurrentMatch
 ```
