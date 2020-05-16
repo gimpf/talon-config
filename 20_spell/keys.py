@@ -87,8 +87,9 @@ specialchars_alphabet_to_char = {
 # todo digits should have a single definition shared across numbers/ordinals and here
 fkey_num_to_word = 'zero one two three four five six seven eight nine ten eleven twelve'.split(
     ' ')
+# use fun as function key prefix for better recognition in context ("eff four" performs poorly)
 specialchars_alphabet_to_char.update(
-    {f"F {fkey_num_to_word[i]}": f"f{i}" for i in range(1, 13)})
+    {f"fun {fkey_num_to_word[i]}": f"f{i}" for i in range(1, 13)})
 navs_word_to_key = {
     'left':  'left',
     'right': 'right',
