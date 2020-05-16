@@ -1,7 +1,7 @@
 mode: command
 -
 word <word>:
-    insert(word)
+    insert("" + word)
 
 ^many words <word>+$:
     # the difference between <word>+ and <phrase> is that <phrase> makes use of
