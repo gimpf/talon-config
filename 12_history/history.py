@@ -19,9 +19,7 @@ def on_phrase_post(j):
     cmd = j['cmd']
     if cmd == 'p.end' and phrase:
         if show_notifications:
-            # should work but doesn't: app.notify(body=phrase)
-            phrase = phrase.replace("'", "'\"'\"'")
-            system(f"notify-send 'Latest Talon Command' '{phrase}' '-t' 3000")
+            app.notify(body=phrase)
         history.append(phrase)
         history = history[-hist_len:]
 
