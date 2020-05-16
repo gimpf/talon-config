@@ -15,7 +15,7 @@ This repository is another configuration set, based upon a heavily modified [kna
 Why another configuration set?
 -------------------------------
 
-I have a non-native accent, a somewhat noisy environment, and the wrong mic for the job.
+I have a non-native accent, causing sub-optimal recognition rates.
 And I wanted to understand how Talon configurations work.
 
 As a result, I use a different spelling alphabet, always employ prefixed command words, and structure the directories around isolated features instead of large categories.
@@ -25,16 +25,17 @@ The changed alphabet and commands make working with this configuration set slowe
 Should I use this?
 -------------------
 
+No.
+
 This configuration is almost unusably incomplete.
-Only use it at all if you face the same problems as I do.
-Otherwise the community supported configurations will very likely be much better for your needs.
+Also, it is likely to be totally rewritten sooner or later.
 
 
 About the folder structure
 ----------------------------
 
 As much as possible, each folder implements only a small number of strongly related features.
-While currently (2020-04-29) bugged, Talon will load the folders in lexicographic order (for now it only does so for the leafs, i.e. the files in the most deeply nested folders).
+Talon will load the folders in lexicographic order.
 However, currently this load order is not required at all.
 The numbers are mainly here to provide sorting for us humans, illustrating a path from very low-level, common, to more and more high-level scripts.
 
@@ -52,7 +53,7 @@ Other Talon tips
 
 Talon requests a mono channel from your microphone, as is proper.
 However, when using mono on the stereo Focusrite Scarlett Sole USB interface, either PulseAudio or the interface creates a hard limit at -6dB, not through reduced gain, but plain numerical limiting.
-This causes unnecessary audio artifacts, which if they occurr will not exactly improve the recognition rate.
+This causes unnecessary audio artifacts, which if they occur will not exactly improve the recognition rate.
 Reducing the mic gain on the interface on the other hand can cause the VAD (voice activity detection) to not pick up on your commands.
 
 The solution is to use PulseAudio for providing a virtual mono audio source, which in the background uses the interface in stereo mode, and copies the left channel to its one and only mono channel.
@@ -65,7 +66,7 @@ Most distros use PA default resampling method speex-float-1, which requires litt
 The current version of Talon uses two audio streams, using different sampling rates, so resampling will always happen, and I have not found a way to force PulseAudio to give Talon always the raw sampling rate (Talon would resample on its own in that case).
 So ...
 You likely want to set in `/etc/pulse/daemon.conf`: `resample-method = speex-float-5`.
-`-5` is stable against adversarial samples w.r.t. human perception.
+`-5` is stable against adversarial samples w.r.t. human perception, and seemingly good enough for w2l.
 
 
 Talon Getting Started and Documention
