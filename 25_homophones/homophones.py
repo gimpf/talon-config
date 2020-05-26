@@ -111,7 +111,7 @@ def raise_homophones(word, forced=False, selection=False):
     ctx.lists['self.homophones_selections'] = selection_numbers[:index-1]
 
     show_help = False
-    gui.show()
+    gui.freeze()
 
 @imgui.open(y=0,x=main_screen.width/2.6,software=True)
 def gui(gui: imgui.GUI):
@@ -129,7 +129,7 @@ def gui(gui: imgui.GUI):
 def show_help_gui():
     global show_help
     show_help = True
-    gui.show()
+    gui.freeze()
 
 mod = Module()
 mod.list('homophones_canonicals', desc='list of words ')

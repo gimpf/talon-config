@@ -41,7 +41,7 @@ mod = Module()
 class Actions:
     def history_enable():
         """Enables the history"""
-        gui.show()
+        gui.freeze()
 
     def history_disable():
         """Disables the history"""
