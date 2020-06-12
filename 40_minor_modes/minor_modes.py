@@ -29,7 +29,8 @@ class Actions:
     def disable_minor_mode(mode: str):
         """disable the specified minor mode"""
         global current_minor_modes
-        current_minor_modes.remove(mode)
+        if mode in current_minor_modes:
+            current_minor_modes.remove(mode)
         scope.update()
 
     def clear_minor_modes():
