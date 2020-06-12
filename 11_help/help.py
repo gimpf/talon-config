@@ -31,6 +31,8 @@ is_context_help_showing = False
 cached_window_title = None
 show_enabled_contexts_only = False
 
+alphabet = {}
+
 
 def update_title():
     global live_update
