@@ -15,7 +15,8 @@ def on_phrase_post(j):
     global hist_len
     global history
 
-    phrase = parse_phrase(j.get('phrase', []))
+    phrase = getattr(j['parsed'], '_unmapped', j['phrase'])
+    phrase = parse_phrase(phrase)
     cmd = j['cmd']
     if cmd == 'p.end' and phrase:
         if show_notifications:
