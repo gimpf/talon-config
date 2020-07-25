@@ -12,26 +12,20 @@ debug = False
 #     'whale plex yank zip']).split(' ')
 
 # My approach
-# quench -> quass (disambiguates better from crunch, quass has a strong U and then long A vowel, very different from everything else)
-# jury -> joy (easier to pronounce, jury recognizes just as as anything but j for me)
-# urge -> use (-"-)
-# sit -> inner (disambiguates w/zip, very microphone, bg-noise dependent, english z unnatural sound for me)
-# whale -> wave (bad to pronounce for me, is confused with bat (sic!) often, otherwise red, sun ...)
 # bat -> buy (bat seems to be like at: always chosen whether it was meant to or not)
+# sit -> ivy (disambiguates w/zip, very microphone, bg-noise dependent, english z unnatural sound for me)
+# jury -> joy (easier to pronounce, jury recognizes just as as anything but j for me)
+# crunch -> kiss
 # odd -> oppo (odd is too similar to some noises between words, like 'control trap' is recognized as 'control odd trap')
-# inner -> ivy (not ice ,next try) + back from nanny -> near (should now not be confused anymore)
+# quench -> quass (quass has a strong U and then long A vowel, very different from everything else)
+# urge -> use (-"-)
+# whale -> wave (bad to pronounce for me, is confused with bat (sic!) often, otherwise red, sun ...)
 letters_alphabet = " ".join([
     'air buy cap drum each fine gust',
     'harp ivy joy kiss look made near',
     'oppo pit quass red sun trap use vest',
     'wave plex yank zip']).split(' ')
 
-# NATO alphabet
-# letters_alphabet = " ".join([
-#     'alpha bravo charlie delta echo foxtrot golf',
-#     'hotel india juliett kilo lima mike november',
-#     'oscar papa quebec romeo sierra tango uniform',
-#     'victor whiskey x-ray yankee zulu']).split(' ')
 
 letters_letters = 'abcdefghijklmnopqrstuvwxyz'
 letters_alphabet_to_letter = dict(zip(letters_alphabet, letters_letters))
@@ -105,6 +99,8 @@ modifiers_word_to_key = {
     "shift": "shift",
     # use 'counter' instead of 'control' because between 'control' and
     # the next letter, w2l often recognizes short letters like air or red
+    # note: this might not be the case anymore w/new model, but also counter is
+    # much easier to pronounce
     'counter': 'ctrl',
     'alt':     'alt',    'option':  'alt',
     'command': 'cmd',

@@ -7,10 +7,6 @@ mod = Module()
 mod.list('help_contexts', desc='list of available contexts')
 
 ctx = Context()
-# using context match in code would be done like this:
-# ctx.matches = 'mode: command'
-# but I will only use context match on command definitions (word/noise -> action mapping),
-# not on action/capture impl, neither in .py nor in .talon
 context_mapping = {}
 
 current_context_page = 1
