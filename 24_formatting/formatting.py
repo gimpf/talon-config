@@ -101,6 +101,8 @@ formatters_dict = {
 
 
 def format_text_helper(words, formatterNames):
+    if isinstance(formatterNames, str):
+        formatterNames = [formatterNames]
     formatters = [formatters_dict[name] for name in formatterNames]
     smash, formatter = chain_formatters(formatters)
     tmp = []
@@ -132,7 +134,7 @@ def formatters(m) -> List[str]:
 
 @mod.action_class
 class Actions:
-    def formatters_format_text(text: Union[str, List[str]], fmtrs: List[str]) -> str:
+    def formatters_format_text(text: Union[str, List[str]], fmtrs: Union[str,List[str]]) -> str:
         """Formats a list of parsed words given a list of formatters"""
         res = ""
         if isinstance(text, list):
