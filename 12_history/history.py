@@ -1,6 +1,7 @@
-from talon import app, imgui, Module
-from talon.engine import engine
 from os import system
+
+from talon import app, imgui, Module, actions
+from talon.engine import engine
 
 show_notifications = True
 hist_len = 10

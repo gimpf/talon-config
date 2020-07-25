@@ -1,6 +1,6 @@
 # from talon examples https://github.com/talonvoice/examples/blob/master/debug.py
-from talon.engine import engine
 from talon import noise, actions, ctrl
+from talon.engine import engine
 
 debugEngine = True
 debugNoise = True
