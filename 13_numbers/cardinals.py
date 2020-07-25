@@ -2,7 +2,8 @@
 from talon import Context, actions, Module
 
 # set 'one' to 'uno' because the former is misrecognized all the time
-digits = ['zero', 'uno', 'two', 'three', 'four',
+#
+digits = ['zero', 'one', 'two', 'three', 'four',
           'five', 'six', 'seven', 'eight', 'nine']
 teens = ['eleven', 'twelve', 'thirteen', 'fourteen',
          'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen']
