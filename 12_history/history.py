@@ -24,14 +24,17 @@ def on_phrase_post(j):
             app.notify(body=phrase)
         history.append(phrase)
         history = history[-hist_len:]
+        # theoretically, this is necessary, practically, it is not, but ... ???
+        if gui.showing:
+            gui.freeze()
 
 # todo: dynamic rect?
 @imgui.open(y=0, x=0, software=True)
 def gui(gui: imgui.GUI):
-    global history
     gui.text("Command History")
     gui.line()
     text = history[:]
+    # text = [str(x) for x in actions.core.recent_phrases()[:hist_len]]
     for line in text:
         gui.text(line)
 
