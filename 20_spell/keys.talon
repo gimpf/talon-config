@@ -17,8 +17,8 @@ finish chord: self.finishChord()
 
 # shortcuts
 spell <user.ordinaries>: key(ordinaries)
-oink <user.specials>: key(specials)
-igo <user.navs>: key(navs)
+do <user.specials>: key(specials)
+go <user.navs>: key(navs)
 select <user.navs>: self.doChord('shift', navs)
 roll <user.navs>: self.doChord('ctrl', navs)
 media <user.media>: key(media)
