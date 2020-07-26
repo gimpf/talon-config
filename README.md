@@ -40,7 +40,7 @@ However, currently this load order is not required at all.
 The numbers are mainly here to provide sorting for us humans, illustrating a path from very low-level, common, to more and more high-level scripts.
 
 
-Other Talon tips
+Talon tips
 -----------------
 
 ### Linux

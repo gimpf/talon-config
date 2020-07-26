@@ -23,13 +23,14 @@ debug = False
 letters_alphabet = " ".join([
     'air buy cap drum each fine gust',
     'harp ivy joy kiss look made near',
-    'oppo pit quass red sun trap use vest',
+    'odd pit quass red sun trap use vest',
     'wave plex yank zip']).split(' ')
 
 
 letters_letters = 'abcdefghijklmnopqrstuvwxyz'
 letters_alphabet_to_letter = dict(zip(letters_alphabet, letters_letters))
 symbols_alphabet_to_symbol = {
+    'dot': '.',
     'point': '.',
     'comma': ',',
     'colon': ':',

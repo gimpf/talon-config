@@ -1,32 +1,69 @@
 # via knausj_talon/code/numbers.py, orig lunixbochs/community
-from talon import Context, actions, Module
+from talon import Context, Module, actions
 
-# set 'one' to 'uno' because the former is misrecognized all the time
-#
-digits = ['zero', 'one', 'two', 'three', 'four',
-          'five', 'six', 'seven', 'eight', 'nine']
-teens = ['eleven', 'twelve', 'thirteen', 'fourteen',
-         'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen']
-tens = ['ten', 'twenty', 'thirty', 'forty',
-        'fifty', 'sixty', 'seventy', 'eighty', 'ninety']
-scales = ['hundred', 'thousand', 'million', 'billion', 'trillion', 'quadrillion',
-          'quintillion', 'sextillion', 'septillion', 'octillion', 'nonillion', 'decillion']
+digits = [
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+]
+teens = [
+    "eleven",
+    "twelve",
+    "thirteen",
+    "fourteen",
+    "fifteen",
+    "sixteen",
+    "seventeen",
+    "eighteen",
+    "nineteen",
+]
+tens = [
+    "ten",
+    "twenty",
+    "thirty",
+    "forty",
+    "fifty",
+    "sixty",
+    "seventy",
+    "eighty",
+    "ninety",
+]
+scales = [
+    "hundred",
+    "thousand",
+    "million",
+    "billion",
+    "trillion",
+    "quadrillion",
+    "quintillion",
+    "sextillion",
+    "septillion",
+    "octillion",
+    "nonillion",
+    "decillion",
+]
 
 digits_map = {n: i for i, n in enumerate(digits)}
 teens_map = {n: i + 11 for i, n in enumerate(teens)}
 tens_map = {n: 10 * (i + 1) for i, n in enumerate(tens)}
+digits_map["oh"] = 0
 
 scales_map = {scales[0]: 100}
 scales_map.update({n: 10 ** ((i + 1) * 3) for i, n in enumerate(scales[1:])})
 
-alt_digits = '(' + ('|'.join(digits_map.keys())) + ')'
-alt_teens = '(' + ('|'.join(teens_map.keys())) + ')'
-alt_tens = '(' + ('|'.join(tens_map.keys())) + ')'
-alt_scales = '(' + ('|'.join(scales_map.keys())) + ')'
+alt_digits = "(" + ("|".join(digits_map.keys())) + ")"
+alt_teens = "(" + ("|".join(teens_map.keys())) + ")"
+alt_tens = "(" + ("|".join(tens_map.keys())) + ")"
+alt_scales = "(" + ("|".join(scales_map.keys())) + ")"
 
 # fuse scales (hundred, thousand) leftward onto numbers (one, twelve, twenty, etc)
-
-
 def fuse_scale(words, limit=None):
     ret = []
     n = None
@@ -38,7 +75,7 @@ def fuse_scale(words, limit=None):
         elif w in scales_map and (limit is None or scales_map[w] < limit):
             scale *= scales_map[w]
             continue
-        elif w == 'and':
+        elif w == "and":
             continue
 
         if n is not None:
@@ -55,9 +92,8 @@ def fuse_scale(words, limit=None):
         ret.append(n * scale)
     return ret
 
+
 # fuse small numbers leftward onto larger numbers
-
-
 def fuse_num(words):
     ret = []
     acc = None
@@ -88,7 +124,7 @@ def fuse_num(words):
     return ret
 
 
-'''
+"""
 def test_num(n):
     print('testing', n)
     step1 = fuse_scale(list(n), 1000)
@@ -107,31 +143,24 @@ assert(test_num([1, 'million', 5, 'hundred', 1, 'thousand']) == 1501000)
 assert(test_num([1, 'million', 5, 'hundred', 'and', 1, 'thousand', 1, 'hundred', 'and', 6]) == 1501106)
 assert(test_num([1, 'million', 1, 1]) == 10000011)
 assert(test_num([1, 'million', 10, 10]) == 100001010)
-'''
-
-mod = Module()
-
-
-@mod.capture
-def digit(m) -> str:
-    "One digit"
+"""
 
 
 ctx = Context()
 
-
-@ctx.capture('self.digit', rule=f'{alt_digits}')
+@ctx.capture("self.digit", rule=f"{alt_digits}")
 def digit(m) -> str:
     return int(digits_map[m[0]])
 
+@ctx.capture("digits", rule=f"{alt_digits}+")
+def digits(m):
+    return int("".join([str(digits_map[n]) for n in m]))
 
-@ctx.capture('digits', rule=f'{alt_digits}+')
-def digits(m) -> int:
-    return int(''.join([str(digits_map[n]) for n in m]))
 
-
-@ctx.capture('number_small', rule=f'({alt_digits} | {alt_teens} | {alt_tens} [{alt_digits}])')
-def number_small(m) -> int:
+@ctx.capture(
+    "number_small", rule=f"({alt_digits} | {alt_teens} | {alt_tens} [{alt_digits}])"
+)
+def number_small(m):
     result = 0
     for word in m:
         if word in digits_map:
@@ -143,14 +172,40 @@ def number_small(m) -> int:
     return result
 
 
-@ctx.capture('number', rule=f'<number_small> [{alt_scales} ([and] (<number_small> | {alt_scales} | <number_small> {alt_scales}))*]')
-def number(m) -> int:
+@ctx.capture(
+    "self.number_scaled",
+    rule=f"<number_small> [{alt_scales} ([and] (<number_small> | {alt_scales} | <number_small> {alt_scales}))*]",
+)
+def number_scaled(m):
     return fuse_num(fuse_scale(fuse_num(fuse_scale(list(m), 3))))[0]
 
 
-@ctx.capture('number_signed', rule=f'[negative] <number>')
-def number_signed(m) -> int:
+# This rule offers more colloquial number speaking when combined with a command
+# like: "go to line <number>"
+# Example: " one one five            " == 115
+#          " one fifteen             " == 115
+#          " one hundred and fifteen " == 115
+@ctx.capture("number", rule="(<digits> | [<digits>] <user.number_scaled>)")
+def number(m):
+    return int("".join(str(i) for i in list(m)))
+
+
+@ctx.capture("number_signed", rule="[negative] <number>")
+def number_signed(m):
     number = m[-1]
-    if m[0] == 'negative':
+    if m[0] == "negative":
         return -number
     return number
+
+
+mod = Module()
+
+
+@mod.capture
+def digit(m) -> str:
+    "One digit"
+
+
+@mod.capture
+def number_scaled(m) -> str:
+    "Returns a series of numbers as a string"
