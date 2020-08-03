@@ -10,10 +10,10 @@ bee (modifier | modifiers) <user.modifiers>: key(modifiers)
 bee media <user.media>: key(media)
 
 combine <user.chord>: key(chord)
-start chord <user.partialchord>: self.startChord(partialchord)
+press <user.partialchord>: self.startChord(partialchord)
 # use any command (like spell) to enter single keys while the chord is active
 # you can even use regular chord command to temporarily use more modifiers
-finish chord: self.finishChord()
+lift: self.finishChord()
 
 # shortcuts
 spell <user.ordinaries>: key(ordinaries)
