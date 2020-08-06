@@ -3,6 +3,7 @@ app: /firefox/
 -
 tag(): generic-tabs
 tag(): tabs
+tag(): windows
 tag(): browser
 
 #### Browser
@@ -79,3 +80,8 @@ action(browser.toggle_dev_tools):
 #### Tabs
 
 action(app.tab_open):     key(ctrl-t)
+
+#### Windows
+
+action(app.window_open): key(ctrl-n)
+
