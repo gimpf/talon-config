@@ -12,6 +12,6 @@ settings():
     # (unstable) threshold for VAD (voice activity detector), default 0.75
     #speech.threshold = 0.75
     # (unstable) minimum silence time before speech is cut off, default 0.150
-    speech.timeout = 0.300
+    speech.timeout = 0.400
     # (unstable) print out additional VAD etc. data to stdout, not log, default 0
     speech.debug = 0
