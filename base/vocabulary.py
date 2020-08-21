@@ -1,7 +1,7 @@
 from talon import Module, Context
 
 mod = Module()
-mod.list("vocabulary", "dictionary of words to replace w/other stuff")
+mod.list("vocabulary", desc="dictionary of words to replace w/other stuff")
 
 
 @mod.capture(rule="{user.vocabulary}")

@@ -5,7 +5,7 @@ from time import sleep
 
 mod = Module()
 mod.setting("mouse_scroll_sensitivity", type=int, default=1, desc="Speed of scrolling")
-
+mod.list("mouse_button", desc="maps names of mouse buttons to their numerical index")
 
 @mod.capture
 def mouse_index(m) -> int:

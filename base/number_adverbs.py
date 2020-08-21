@@ -3,7 +3,7 @@ from talon import Module, Context
 # see https://english.stackexchange.com/questions/312527/what-is-the-name-for-the-group-of-words-that-includes-once-twice-and-thri
 
 mod = Module()
-
+mod.list("simple_numeral_adverb", desc="the list of plain numerical adverbs")
 
 @mod.capture
 def numeral_adverb(m) -> int:
