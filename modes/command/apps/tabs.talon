@@ -1,4 +1,4 @@
-tag: tabs
+tag: user.tabs
 -
 close tab: app.tab_close()
 detach tab: app.tab_detach()

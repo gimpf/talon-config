@@ -1,10 +1,10 @@
 os: linux
 app: /firefox/
 -
-tag(): generic-tabs
-tag(): tabs
-tag(): windows
-tag(): browser
+tag(): user.generic-tabs
+tag(): user.tabs
+tag(): user.windows
+tag(): user.browser
 
 #### Browser
 

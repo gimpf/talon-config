@@ -1,4 +1,4 @@
-tag: browser
+tag: user.browser
 -
 browser bookmark this page:
     browser.bookmark()

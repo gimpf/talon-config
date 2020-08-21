@@ -1,4 +1,4 @@
-tag: generic-tabs
+tag: user.generic-tabs
 -
 action(app.tab_close):    key(ctrl-w)
 # action(app.tab_detach)

@@ -1,9 +1,10 @@
 os: linux
 app: Xfce4-terminal
 -
-tag(): tabs
-tag(): windows
-tag(): generic-tabs
+tag(): user.tabs
+tag(): user.windows
+tag(): user.generic-tabs
+tag(): user.terminal
 
 #### Tabs
 

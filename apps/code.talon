@@ -1,8 +1,8 @@
 os: linux
 app: Code
 -
-tag(): tabs
-tag(): generic-tabs
+tag(): user.tabs
+tag(): user.generic-tabs
 
 #### Tabs
 
