@@ -17,3 +17,5 @@ settings():
     speech.debug = 0
     # record all audio to local flac files, for use with model training
     speech.record_all = 0
+
+tag(): user.mouse_grid_enabled
