@@ -15,3 +15,5 @@ settings():
     speech.timeout = 0.200
     # (unstable) print out additional VAD etc. data to stdout, not log, default 0
     speech.debug = 0
+    # record all audio to local flac files, for use with model training
+    speech.record_all = 0

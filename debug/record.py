@@ -56,7 +56,7 @@ def pre_phrase(d):
 
 
 def post_phrase(d):
-    if always_record:
+    if always_record.get():
         phrase = " ".join(getattr(d["parsed"], "_unmapped", d["phrase"]))
         actions.self.record_audio(phrase)
 
