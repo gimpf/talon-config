@@ -34,7 +34,7 @@ letters_letters = "abcdefghijklmnopqrstuvwxyz"
 letters_alphabet_to_letter = dict(zip(letters_alphabet, letters_letters))
 symbols_alphabet_to_symbol = {
     "point": ".",
-    "dot": ".",
+    # "dot": ".",
     "comma": ",",
     "colon": ":",
     "semicolon": ";",
@@ -111,7 +111,7 @@ symbols_alphabet_to_symbol = {
     "space": "space",  # also mapped in special char
 }
 specialchars_alphabet_to_char = {
-    "tab": "tab",
+    "tabby": "tab",
     "enter": "enter",
     "space": "space",  # also mapped in symbol
     "escape": "escape",
@@ -143,10 +143,12 @@ modifiers_word_to_key = {
     # note: this might not be the case anymore w/new model, but also counter is
     # much easier to pronounce
     "counter": "ctrl",
-    "alt": "alt",
-    "option": "alt",
-    "command": "cmd",
-    "R alt": "ralt",
+    # "alt": "alt",
+    # "option": "alt",
+    # "alley": "alt",
+    "fly": "alt",
+    # "command": "cmd",
+    # "R alt": "ralt",
     "super": "super",
     "hyper": "hyper",
 }
