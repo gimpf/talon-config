@@ -149,8 +149,12 @@ assert(test_num([1, 'million', 10, 10]) == 100001010)
 ctx = Context()
 
 
-@ctx.capture("self.digit", rule=f"{alt_digits}")
+mod = Module()
+
+
+@mod.capture(rule=f"{alt_digits}")
 def digit(m) -> str:
+    "One digit"
     return int(digits_map[m[0]])
 
 
@@ -159,9 +163,7 @@ def digits(m):
     return int("".join([str(digits_map[n]) for n in m]))
 
 
-@ctx.capture(
-    "number_small", rule=f"({alt_digits} | {alt_teens} | {alt_tens} [{alt_digits}])"
-)
+@ctx.capture("number_small", rule=f"({alt_digits} | {alt_teens} | {alt_tens} [{alt_digits}])")
 def number_small(m):
     result = 0
     for word in m:
@@ -173,12 +175,9 @@ def number_small(m):
             result += teens_map[word]
     return result
 
-
-@ctx.capture(
-    "self.number_scaled",
-    rule=f"<number_small> [{alt_scales} ([and] (<number_small> | {alt_scales} | <number_small> {alt_scales}))*]",
-)
-def number_scaled(m):
+@mod.capture(rule=f"<number_small> [{alt_scales} ([and] (<number_small> | {alt_scales} | <number_small> {alt_scales}))*]")
+def number_scaled(m) -> str:
+    "Returns a series of numbers as a string"
     return fuse_num(fuse_scale(fuse_num(fuse_scale(list(m), 3))))[0]
 
 
@@ -198,16 +197,3 @@ def number_signed(m):
     if m[0] == "negative":
         return -number
     return number
-
-
-mod = Module()
-
-
-@mod.capture
-def digit(m) -> str:
-    "One digit"
-
-
-@mod.capture
-def number_scaled(m) -> str:
-    "Returns a series of numbers as a string"

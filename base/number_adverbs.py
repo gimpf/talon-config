@@ -5,25 +5,19 @@ from talon import Module, Context
 mod = Module()
 mod.list("simple_numeral_adverb", desc="the list of plain numerical adverbs")
 
-@mod.capture
+@mod.capture(rule="({self.simple_numeral_adverb} | <number> times)")
 def numeral_adverb(m) -> int:
     """Returns a single numeral adverb like once or four times as an integer"""
+    if hasattr(m, "simple_numeral_adverb"):
+        return int(m.simple_numeral_adverb)
+    else:
+        return int(m.number)
 
 
-adverbs = {
+ctx = Context()
+ctx.lists["self.simple_numeral_adverb"] = {
     "once": "1",
     "one time": "1",
     "twice": "2",
     "thrice": "3",
 }
-
-ctx = Context()
-ctx.lists["self.simple_numeral_adverb"] = adverbs
-
-
-@ctx.capture(rule="({self.simple_numeral_adverb} | <number> times)")
-def numeral_adverb(m) -> int:
-    if hasattr(m, "simple_numeral_adverb"):
-        return int(m.simple_numeral_adverb)
-    else:
-        return int(m.number)

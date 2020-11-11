@@ -173,9 +173,10 @@ mod.list("formatters", desc="list of formatters")
 active_formatters = []
 
 
-@mod.capture
+@mod.capture(rule="{self.formatters}+")
 def formatters(m) -> List[str]:
     "Captures a list of of formatters"
+    return m.formatters_list
 
 
 @mod.action
@@ -206,8 +207,3 @@ def formatters_formatted(text: Union[str, List[str]]) -> str:
 
 ctx = Context()
 ctx.lists["self.formatters"] = formatters_dict.keys()
-
-
-@ctx.capture(rule="{self.formatters}+")
-def formatters(m):
-    return m.formatters_list

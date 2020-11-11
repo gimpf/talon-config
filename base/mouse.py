@@ -1,5 +1,4 @@
 from talon import cron, ctrl, ui, Module, Context, actions
-from talon.engine import engine
 from talon_plugins import speech, eye_mouse, eye_zoom_mouse
 from time import sleep
 
@@ -7,14 +6,21 @@ mod = Module()
 mod.setting("mouse_scroll_sensitivity", type=int, default=1, desc="Speed of scrolling")
 mod.list("mouse_button", desc="maps names of mouse buttons to their numerical index")
 
-@mod.capture
+@mod.capture(rule="{self.mouse_button}")
 def mouse_index(m) -> int:
     "One mouse button index"
+    return int(m.mouse_button)
 
-
-@mod.capture
+@mod.capture(rule="[({self.mouse_button} | <user.numeral_adverb> | {self.mouse_button} <user.numeral_adverb>)]")
 def mouse_clickspec(m) -> (int, int):
     "Captures which mouse button is to be pressed for how many times."
+    btn = 0
+    times = 1
+    if hasattr(m, "mouse_button"):
+        btn = int(m.mouse_button)
+    if hasattr(m, "numeral_adverb"):
+        times = m.numeral_adverb
+    return (btn, times)
 
 
 @mod.action_class
@@ -52,21 +58,3 @@ ctx.lists["self.mouse_button"] = {
     "right": "1",
     "middle": "2",
 }
-
-
-@ctx.capture(rule="{self.mouse_button}")
-def mouse_index(m) -> int:
-    return int(m.mouse_button)
-
-
-@ctx.capture(
-    rule="[({self.mouse_button} | <user.numeral_adverb> | {self.mouse_button} <user.numeral_adverb>)]"
-)
-def mouse_clickspec(m) -> (int, int):
-    btn = 0
-    times = 1
-    if hasattr(m, "mouse_button"):
-        btn = int(m.mouse_button)
-    if hasattr(m, "numeral_adverb"):
-        times = m.numeral_adverb
-    return (btn, times)

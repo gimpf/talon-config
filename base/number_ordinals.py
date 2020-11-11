@@ -91,18 +91,13 @@ for n in range(1, 100):
 mod = Module()
 mod.list("ordinal_words", desc="list of ordinals")
 
-ctx = Context()
 
-
-@mod.capture
+@mod.capture(rule="{self.ordinal_words}")
 def ordinals(m) -> int:
     "Returns a single ordinial as a digit"
-
-
-@ctx.capture(rule="{self.ordinal_words}")
-def ordinals(m):
     o = m[0]
     return int(ordinal_words[o])
 
 
+ctx = Context()
 ctx.lists["self.ordinal_words"] = ordinal_words.keys()

@@ -160,90 +160,113 @@ mod.list("modifier", desc="All modifier keys")
 mod.list("media", desc="All media keys")
 
 
-@mod.capture
+
+@mod.capture(rule="[(uppercase | large)] {user.letter}")
 def letter(m) -> str:
     "One letter key, optionally uppercase"
+    letter = m[0]
+    if m[0] == "uppercase" or m[0] == "large":
+        letter = m[1]
+    # letter = letters_alphabet_to_letter[letter]
+    if m[0] == "uppercase" or m[0] == "large":
+        return letter.upper()
+    return letter
 
 
-@mod.capture
+@mod.capture(rule="<user.letter>+")
 def letters(m) -> str:
     "Multiple letter keys"
+    return " ".join(m.letter_list)
 
 
 # a single digit capture is defined by the numbers/cardinals module
-@mod.capture
+@mod.capture(rule="<user.digit>+")
 def digits(m) -> str:
     "Multiple digit keys"
+    return " ".join(m.digit_list)
 
 
-@mod.capture
+@mod.capture(rule="{self.symbol}")
 def symbol(m) -> str:
     "One symbol key"
+    return m.symbol
 
 
-@mod.capture
+@mod.capture(rule="{self.symbol}+")
 def symbols(m) -> str:
     "Multiple symbol keys"
+    return " ".join(m.symbol_list)
 
 
-@mod.capture
+@mod.capture(rule="(<self.letter> | <user.digit> | <self.symbol>)")
 def ordinary(m) -> str:
     "One character of either letter, digit or symbol"
+    return str(m)
 
 
-@mod.capture
+@mod.capture(rule="<self.ordinary>+")
 def ordinaries(m) -> str:
     "Multiple ordinary characters"
+    return " ".join(m.ordinary_list)
 
-
-@mod.capture
+@mod.capture(rule="{self.special}")
 def special(m) -> str:
     "One special key"
+    return m.special
 
 
-@mod.capture
+@mod.capture(rule="{self.special}+")
 def specials(m) -> str:
     "Multiple special keys"
+    return " ".join(m.special_list)
 
 
-@mod.capture
+@mod.capture(rule="{self.nav}")
 def nav(m) -> str:
     "One navigation key"
+    return m.nav
 
 
-@mod.capture
+@mod.capture(rule="{self.nav}+")
 def navs(m) -> str:
     "List of one or more navigation keys"
+    return " ".join(m.nav_list)
 
 
-@mod.capture
+@mod.capture(rule="(<self.ordinary> | <self.special> | <self.nav>)")
 def any(m) -> str:
     "Any one non-modifier key"
+    return str(m)
 
 
-@mod.capture
+@mod.capture(rule="<self.any>+")
 def anys(m) -> str:
     "Multiple non-modifier keys"
+    return " ".join(m.any_list)
 
 
-@mod.capture
+@mod.capture(rule="{self.modifier}+")
 def modifiers(m) -> str:
     "One or more modifier keys"
+    return "-".join(set(m.modifier_list))
 
 
-@mod.capture
+@mod.capture(rule="<self.modifiers> <self.anys>")
 def chord(m) -> str:
     "Modifiers and other keys"
+    return actions.user.chord(m.modifiers, m.anys)
 
 
-@mod.capture
+@mod.capture(rule="<self.modifiers> <self.any>*")
 def partialchord(m) -> str:
     "Modifiers and optionally other keys"
+    return " ".join([m.modifiers] + (m.any_list if hasattr(m, "any_list") else []))
 
 
-@mod.capture
+@mod.capture(rule="{self.media}")
 def media(m) -> str:
     "Media keys"
+    return m.media
 
 
 current_modifiers = set()
@@ -312,94 +335,3 @@ ctx.lists["self.media"] = {
     "play": "play",
     "pause": "pause",
 }
-
-
-@ctx.capture(rule="[(uppercase | large)] {user.letter}")
-def letter(m):
-    letter = m[0]
-    if m[0] == "uppercase" or m[0] == "large":
-        letter = m[1]
-    letter = letters_alphabet_to_letter[letter]
-    if m[0] == "uppercase" or m[0] == "large":
-        return letter.upper()
-    return letter
-
-
-@ctx.capture(rule="<user.letter>+")
-def letters(m):
-    return " ".join(m.letter_list)
-
-
-@ctx.capture(rule="<user.digit>+")
-def digits(m) -> str:
-    return " ".join(m.digit_list)
-
-
-@ctx.capture(rule="{self.symbol}")
-def symbol(m):
-    return m.symbol
-
-
-@ctx.capture(rule="{self.symbol}+")
-def symbols(m):
-    return " ".join(m.symbol_list)
-
-
-@ctx.capture(rule="(<self.letter> | <user.digit> | <self.symbol>)")
-def ordinary(m) -> str:
-    return str(m)
-
-
-@ctx.capture(rule="<self.ordinary>+")
-def ordinaries(m) -> str:
-    return " ".join(m.ordinary_list)
-
-
-@ctx.capture(rule="{self.special}")
-def special(m):
-    return m.special
-
-
-@ctx.capture(rule="{self.special}+")
-def specials(m):
-    return " ".join(m.special_list)
-
-
-@ctx.capture(rule="{self.nav}")
-def nav(m) -> str:
-    return m.nav
-
-
-@ctx.capture(rule="{self.nav}+")
-def navs(m) -> str:
-    return " ".join(m.nav_list)
-
-
-@ctx.capture(rule="(<self.ordinary> | <self.special> | <self.nav>)")
-def any(m) -> str:
-    return str(m)
-
-
-@ctx.capture(rule="<self.any>+")
-def anys(m) -> str:
-    return " ".join(m.any_list)
-
-
-@ctx.capture(rule="{self.modifier}+")
-def modifiers(m):
-    return "-".join(set(m.modifier_list))
-
-
-@ctx.capture(rule="<self.modifiers> <self.anys>")
-def chord(m) -> str:
-    return actions.user.chord(m.modifiers, m.anys)
-
-
-@ctx.capture(rule="<self.modifiers> <self.any>*")
-def partialchord(m) -> str:
-    return " ".join([m.modifiers] + (m.any_list if hasattr(m, "any_list") else []))
-
-
-@ctx.capture(rule="{self.media}")
-def media(m) -> str:
-    return m.media
