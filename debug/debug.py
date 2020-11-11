@@ -1,6 +1,5 @@
 # from talon examples https://github.com/talonvoice/examples/blob/master/debug.py
-from talon import noise, actions, ctrl
-from talon.engine import engine
+from talon import noise, actions, ctrl, speech_system
 from talon.microphone import manager
 
 debugEngine = True
@@ -10,13 +9,13 @@ debugMic = True
 
 def listener(topic, m):
     if topic == "cmd" and m["cmd"]["cmd"] == "g.load" and m["success"] == True:
-        print("engine event: [grammar reloaded]")
+        print("speech_system event: [grammar reloaded]")
     else:
-        print(f"engine event: {topic}", m)
+        print(f"speech_system event: {topic}", m)
 
 
 if debugEngine:
-    engine.register("", listener)
+    speech_system.register("", listener)
 
 
 def on_mic_ev(topic, arg):

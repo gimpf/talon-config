@@ -1,7 +1,7 @@
 from os import system
 
-from talon import app, imgui, Module, actions
-from talon.engine import engine
+from talon import app, imgui, Module, actions, speech_system
+
 
 mod = Module()
 show_notifications = mod.setting(
@@ -25,8 +25,7 @@ def on_phrase_post(j):
 
     phrase = getattr(j["parsed"], "_unmapped", j["phrase"])
     phrase = parse_phrase(phrase)
-    cmd = j["cmd"]
-    if cmd == "p.end" and phrase:
+    if phrase:
         if show_notifications.get():
             app.notify(body=phrase)
         history.append(phrase)
@@ -46,7 +45,7 @@ def gui(gui: imgui.GUI):
         gui.text(line)
 
 
-engine.register("post:phrase", on_phrase_post)
+speech_system.register("post:phrase", on_phrase_post)
 
 
 @mod.action_class
