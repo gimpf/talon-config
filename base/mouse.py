@@ -1,5 +1,5 @@
 from talon import cron, ctrl, ui, Module, Context, actions
-from talon_plugins import speech, eye_mouse, eye_zoom_mouse
+from talon_plugins import eye_mouse, eye_zoom_mouse
 from time import sleep
 
 mod = Module()
