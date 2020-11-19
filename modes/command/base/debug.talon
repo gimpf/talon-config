@@ -1,8 +1,5 @@
 mode: command
 -
-settings():
-    user.recorder_record_all = 0
-
 ^print all actions$:
     user.print_all_actions()
 
