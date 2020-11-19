@@ -17,14 +17,14 @@ debug = False
 # jury -> joy (easier to pronounce, jury recognizes just as as anything but j for me)
 # crunch -> kiss
 # # odd -> oppo (odd is too similar to some noises between words, like 'control trap' is recognized as 'control odd trap')
-# quench -> quass (quass has a strong U and then long A vowel, very different from everything else)
+# # b2-large doesn't like this quench -> quass (quass has a strong U and then long A vowel, very different from everything else)
 # urge -> use (-"-)
 # whale -> wave (bad to pronounce for me, is confused with bat (sic!) often, otherwise red, sun ...)
 letters_alphabet = " ".join(
     [
         "air buy cap drum each fine gust",
         "harp ivy joy kiss look made near",
-        "odd pit quass red sun trap use vest",
+        "odd pit quench red sun trap use vest",
         "wave plex yank zip",
     ]
 ).split(" ")
