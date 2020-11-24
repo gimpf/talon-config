@@ -22,6 +22,31 @@ def mouse_clickspec(m) -> (int, int):
         times = m.numeral_adverb
     return (btn, times)
 
+@mod.capture(rule='{self.direction} <number>')
+def direction(m) -> str:
+    "Captures a relative movement in a specific direction"
+    speed = [0.0, 0.0]
+    if m.direction == 'up':
+        speed = [0.0, -1.0]
+    elif m.direction == 'right':
+        speed = [1.0, 0.0]
+    elif m.direction == 'down':
+        speed = [0.0, 1.0]
+    elif m.direction == 'left':
+        speed = [-1.0, 0.0]
+    res = [x * m.number_signed for x in speed]
+    res = f'{int(res[0])},{int(res[1])}'
+    print(f'direction: {res}')
+    return res
+
+
+@mod.capture(rule='<user.direction>+')
+def directions(m) -> str:
+    "Captures directions consisting of several relative movements"
+    res = ' '.join(m.direction_list)
+    print(f'directions: {res}')
+    return res
+
 
 @mod.action_class
 class Actions:
@@ -31,6 +56,15 @@ class Actions:
         x = rect.x + rect.width / 2
         y = rect.y + rect.height / 2
         ctrl.mouse_move(x, y)
+
+    def mouse_move(directions: str):
+        """Moves the mouse relative to the current position"""
+        for d in directions.split(" "):
+            [dx, dy] = d.split(",")
+            dx, dy = int(dx), int(dy)
+            x, y = ctrl.mouse_pos()
+            print(f'current mouse pos: {x},{y}, move {dx},{dy}')
+            ctrl.mouse_move(x+dx, y+dy)
 
     def mouse_click(clickspec: (int, int)):
         """Clicks a mouse button as many times, as specified in clickspec"""
