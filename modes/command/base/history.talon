@@ -1,7 +1,7 @@
 mode: command
 -
-settings():
-    user.history_show_notifications = 1
+# settings():
+#    user.history_show_notifications = 1
 
 ^show command history$:
     user.history_show()

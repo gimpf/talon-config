@@ -28,6 +28,7 @@ def on_phrase_post(j):
     if phrase:
         if show_notifications.get():
             app.notify(body=phrase)
+        print(f"recognized phrase: {phrase}")
         history.append(phrase)
         history = history[-hist_len:]
         if gui.showing:
