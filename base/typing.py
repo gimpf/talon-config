@@ -122,9 +122,9 @@ specialchars_alphabet_to_char = {
 fkey_num_to_word = "zero one two three four five six seven eight nine ten eleven twelve".split(
     " "
 )
-# use fun as function key prefix for better recognition in context ("eff four" performs poorly)
+# use foil as function key prefix for better recognition in context ("eff four" performs poorly)
 specialchars_alphabet_to_char.update(
-    {f"fun {fkey_num_to_word[i]}": f"f{i}" for i in range(1, 13)}
+    {f"foil {fkey_num_to_word[i]}": f"f{i}" for i in range(1, 13)}
 )
 navs_word_to_key = {
     "left": "left",
