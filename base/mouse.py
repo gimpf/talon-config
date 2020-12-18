@@ -3,7 +3,7 @@ from talon_plugins import eye_mouse, eye_zoom_mouse
 from time import sleep
 
 mod = Module()
-mod.setting("mouse_scroll_sensitivity", type=int, default=1, desc="Speed of scrolling")
+sensitivity = mod.setting("mouse_scroll_sensitivity", type=int, default=1, desc="Speed of scrolling")
 mod.list("mouse_button", desc="maps names of mouse buttons to their numerical index")
 
 @mod.capture(rule="{self.mouse_button}")
@@ -75,18 +75,17 @@ class Actions:
     def mouse_scroll_down():
         """Scrolls down"""
         actions.mouse_scroll(
-            by_lines=False, y=int(ctx.settings["user.mouse_scroll_sensitivity"])
+            by_lines=False, y=sensitivity.get()
         )
 
     def mouse_scroll_up():
         """Scrolls up"""
         actions.mouse_scroll(
-            by_lines=False, y=-int(ctx.settings["user.mouse_scroll_sensitivity"])
+            by_lines=False, y=-sensitivity.get()
         )
 
 
 ctx = Context()
-ctx.settings["self.mouse_scroll_sensitivity"] = 5
 ctx.lists["self.mouse_button"] = {
     "left": "0",
     "right": "1",
