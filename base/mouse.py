@@ -1,5 +1,6 @@
 from talon import cron, ctrl, ui, Module, Context, actions
 from talon_plugins import eye_mouse, eye_zoom_mouse
+from typing import Optional, Tuple
 from time import sleep
 
 mod = Module()
@@ -11,8 +12,8 @@ def mouse_index(m) -> int:
     "One mouse button index"
     return int(m.mouse_button)
 
-@mod.capture(rule="[({self.mouse_button} | <user.numeral_adverb> | {self.mouse_button} <user.numeral_adverb>)]")
-def mouse_clickspec(m) -> (int, int):
+@mod.capture(rule="{self.mouse_button} | <user.numeral_adverb> | {self.mouse_button} <user.numeral_adverb>")
+def mouse_clickspec(m) -> Tuple[int, int]:
     "Captures which mouse button is to be pressed for how many times."
     btn = 0
     times = 1
@@ -66,9 +67,9 @@ class Actions:
             print(f'current mouse pos: {x},{y}, move {dx},{dy}')
             ctrl.mouse_move(x+dx, y+dy)
 
-    def mouse_click(clickspec: (int, int)):
+    def mouse_click(clickspec: Optional[Tuple[int, int]]):
         """Clicks a mouse button as many times, as specified in clickspec"""
-        btn, times = clickspec
+        btn, times = clickspec or (0, 1)
         for _ in range(times):
             actions.mouse_click(button=btn)
 
