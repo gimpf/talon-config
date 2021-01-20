@@ -36,7 +36,7 @@ def on_phrase_post(j):
 
 
 # todo: dynamic rect?
-@imgui.open(y=0, x=0, software=True)
+@imgui.open(y=0, x=0)
 def gui(gui: imgui.GUI):
     gui.text("Command History")
     gui.line()

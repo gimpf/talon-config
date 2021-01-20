@@ -3,7 +3,8 @@ Talon tips
 
 ### Linux
 
-* ImGUI issues: for some linux distributions, ImGUI will crash Talon with a segmentation fault after a few times of using help and/or command history.
+
+* **Obsolete by talon 0.1.5 (maybe even 0.1.4)** ImGUI issues: for some linux distributions, ImGUI will crash Talon with a segmentation fault after a few times of using help and/or command history.
   For this, I set `software=True` in the `imgui` annotations.
   Were this not Mesa related but a driver issue, using software rendering by setting the environment variable `LIBGL_ALWAYS_SOFTWARE=1` were also an option.
 
