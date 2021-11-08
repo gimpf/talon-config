@@ -2,6 +2,7 @@ tag: user.mouse_grid_showing
 -
 <number>:
     user.grid_narrow(number)
+
 grid off:
     user.grid_close()
 

@@ -1,12 +1,12 @@
 mode: command
 -
-click:
+mouse click:
     user.mouse_click()
 
-click <user.mouse_clickspec>:
+mouse click <user.mouse_clickspec>:
     user.mouse_click(mouse_clickspec)
 
-tickle:
+mouse tickle:
     user.mouse_move("1,0 -1,0 0,1 0,-1")
 
 mouse center:

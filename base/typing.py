@@ -150,7 +150,7 @@ modifiers_word_to_key = {
     # "command": "cmd",
     # "R alt": "ralt",
     "super": "super",
-    "hyper": "hyper",
+    # "hyper": "hyper", # doesn's exist on windows?
 }
 
 mod = Module()
